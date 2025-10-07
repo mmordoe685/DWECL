@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1.2</title>
+</head>
+<body>
+    <select id="colores">
+        <option value="Rojo">Rojo</option>
+        <option value="Verde">Verde</option>
+        <option value="Azul">Azul</option>
+    </select>
+
+    <button onclick="mostrarColor()">Mostrar color</button>
+
+    <script>
+        function mostrarColor() {
+            let color = document.getElementById("colores").value;
+            console.log("Color seleccionado:", color);
+        }
+    </script>
+</body>
+</html>

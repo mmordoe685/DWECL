@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1.4</title>
+</head>
+<body>
+    <select id="imagenes" onchange="mostrarImagen()">
+        <option value="imagen1.jpg">Imagen 1</option>
+        <option value="imagen2.jpg">Imagen 2</option>
+        <option value="imagen3.jpg">Imagen 3</option>
+    </select>
+
+    <br><br>
+    <img id="imgDisplay" src="" alt="Imagen seleccionada" width="300">
+
+    <script>
+        function mostrarImagen() {
+            let img = document.getElementById("imagenes").value;
+            document.getElementById("imgDisplay").src = img;
+        }
+    </script>
+</body>
+</html>

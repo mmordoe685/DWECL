@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1.5</title>
+</head>
+<body>
+    <p id="miTexto">Este es un texto de ejemplo.</p>
+
+    <label>Negrita:</label>
+    <select id="negrita" onchange="aplicarEstilo()">
+        <option value="normal">Normal</option>
+        <option value="bold">Negrita</option>
+    </select>
+
+    <label>Cursiva:</label>
+    <select id="cursiva" onchange="aplicarEstilo()">
+        <option value="normal">Normal</option>
+        <option value="italic">Cursiva</option>
+    </select>
+
+    <script>
+        function aplicarEstilo() {
+            let texto = document.getElementById("miTexto");
+            let negrita = document.getElementById("negrita").value;
+            let cursiva = document.getElementById("cursiva").value;
+
+            texto.style.fontWeight = negrita;
+            texto.style.fontStyle = cursiva;
+        }
+    </script>
+</body>
+</html>
