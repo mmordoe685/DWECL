@@ -13,10 +13,14 @@
 
     <button onclick="mostrarColor()">Mostrar color</button>
 
+    <!-- Aquí se mostrará el color seleccionado -->
+    <p id="resultado"></p>
+
     <script>
         function mostrarColor() {
             let color = document.getElementById("colores").value;
             console.log("Color seleccionado:", color);
+            document.getElementById("resultado").textContent = "Color seleccionado: " + color;
         }
     </script>
 </body>

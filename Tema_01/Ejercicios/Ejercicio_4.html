@@ -5,6 +5,7 @@
     <title>Ejercicio 1.4</title>
 </head>
 <body>
+    <h2>Selecciona una imagen:</h2>
     <select id="imagenes" onchange="mostrarImagen()">
         <option value="imagen1.jpg">Imagen 1</option>
         <option value="imagen2.jpg">Imagen 2</option>
@@ -12,12 +13,19 @@
     </select>
 
     <br><br>
-    <img id="imgDisplay" src="" alt="Imagen seleccionada" width="300">
+    <img id="imgDisplay" src="imagen1.jpg" alt="Imagen seleccionada" width="300">
 
     <script>
         function mostrarImagen() {
+            // Tomamos el valor del select
             let img = document.getElementById("imagenes").value;
+            // Lo asignamos al src de la imagen
             document.getElementById("imgDisplay").src = img;
+        }
+
+        // Para mostrar la primera imagen al cargar la página
+        window.onload = function() {
+            mostrarImagen();
         }
     </script>
 </body>
