@@ -12,7 +12,13 @@
         function rango50a99() {
             let num1 = parseFloat(prompt("Ingresa el primer número:"));
             let num2 = parseFloat(prompt("Ingresa el segundo número:"));
-            let resultado = (num1 >= 50 && num1 <= 99) || (num2 >= 50 && num2 <= 99);
+            let num3 = parseFloat(prompt("Ingresa el tercer número:"));
+
+            // Verificar si alguno de los tres números está en el rango 50..99
+            let resultado = (num1 >= 50 && num1 <= 99) || 
+                            (num2 >= 50 && num2 <= 99) || 
+                            (num3 >= 50 && num3 <= 99);
+
             alert("Resultado: " + resultado);
         }
     </script>
