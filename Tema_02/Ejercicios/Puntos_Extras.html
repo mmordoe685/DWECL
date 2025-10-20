@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Apuesta</title>
+</head>
+<body>
+  <h2>Apuesta de la cuenta (1-300€)</h2>
+
+  <label>Spiderman: <input type="number" id="p1"></label><br>
+  <label>El Cigala: <input type="number" id="p2"></label><br>
+  <label>Chemita: <input type="number" id="p3"></label><br><br>
+
+  <button onclick="resultado()">Resultado</button>
+
+  <p id="res"></p>
+
+  <script>
+    function resultado() {
+      const nombres = ['Spiderman','El Cigala','Chemita'];
+      const apuestas = [
+        parseInt(document.getElementById('p1').value),
+        parseInt(document.getElementById('p2').value),
+        parseInt(document.getElementById('p3').value)
+      ];
+      
+      if (apuestas.some(n => n < 1 || n > 300)) {
+        document.getElementById('res').textContent = 'Apuesta fuera de rango (1-300).';
+        return;
+      }
+
+      const cuenta = Math.floor(Math.random() * 300) + 1;
+      const dif = apuestas.map(n => Math.abs(n - cuenta));
+
+      const indices = dif
+        .map((d, i) => ({d, i}))
+        .sort((a,b) => a.d - b.d)
+        .slice(0,2)
+        .map(x => x.i);
+
+      const ganadores = indices.map(i => nombres[i]);
+
+      document.getElementById('res').textContent = `Cuenta real: ${cuenta}€. Se libran: ${ganadores.join(' y ')}.`;
+    }
+  </script>
+</body>
+</html>
