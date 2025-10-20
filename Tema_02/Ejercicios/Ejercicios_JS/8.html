@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Adivinanza</title>
+</head>
+<body>
+    <h1>Juego de Adivinanza</h1>
+    <p>Intenta adivinar el número entre 1 y 10.</p>
+
+    <button onclick="adivinarNumero()">Adivinar</button>
+
+    <script>
+        function adivinarNumero() {
+            // Generar un número aleatorio entre 1 y 10
+            let numeroAleatorio = Math.floor(Math.random() * 10) + 1;
+
+            // Pedir al usuario que adivine el número
+            let conjetura = parseInt(prompt("Adivina un número entre 1 y 10:"));
+
+            // Comparar la conjetura con el número aleatorio
+            if (conjetura === numeroAleatorio) {
+                alert("¡Buen trabajo!");
+            } else {
+                alert("No coincide. El número era: " + numeroAleatorio);
+            }
+        }
+    </script>
+</body>
+</html>

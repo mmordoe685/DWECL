@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 16: Suma de dos números</title>
+</head>
+<body>
+    <h1>Ejercicio 16: Suma de dos números</h1>
+    <button onclick="sumaTriple()">Calcular</button>
+
+    <script>
+        function sumaTriple() {
+            let num1 = parseFloat(prompt("Ingresa el primer número:"));
+            let num2 = parseFloat(prompt("Ingresa el segundo número:"));
+            let suma = num1 + num2;
+            let resultado = num1 === num2 ? suma * 3 : suma;
+            alert("Resultado: " + resultado);
+        }
+    </script>
+</body>
+</html>

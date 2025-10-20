@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplicación y División</title>
+</head>
+<body>
+    <h1>Multiplicación y División de Dos Números</h1>
+    <button onclick="calcular()">Calcular</button>
+
+    <script>
+        function calcular() {
+            // Pedir los dos números al usuario
+            let num1 = parseFloat(prompt("Ingresa el primer número:"));
+            let num2 = parseFloat(prompt("Ingresa el segundo número:"));
+
+            // Validar que no se divida entre 0
+            if (num2 === 0) {
+                alert("No se puede dividir entre 0.");
+                return;
+            }
+
+            // Calcular multiplicación y división
+            let multiplicacion = num1 * num2;
+            let division = num1 / num2;
+
+            // Mostrar resultados
+            alert("Multiplicación: " + multiplicacion + "\nDivisión: " + division);
+        }
+    </script>
+</body>
+</html>

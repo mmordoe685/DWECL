@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 18: Verificar 50</title>
+</head>
+<body>
+    <h1>Ejercicio 18: Verificar 50</h1>
+    <button onclick="verificar50()">Verificar</button>
+
+    <script>
+        function verificar50() {
+            let num1 = parseFloat(prompt("Ingresa el primer número:"));
+            let num2 = parseFloat(prompt("Ingresa el segundo número:"));
+            let resultado = (num1 === 50 || num2 === 50 || (num1 + num2) === 50);
+            alert("Resultado: " + resultado);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 17: Diferencia con 19</title>
+</head>
+<body>
+    <h1>Ejercicio 17: Diferencia con 19</h1>
+    <button onclick="diferenciaCon19()">Calcular</button>
+
+    <script>
+        function diferenciaCon19() {
+            let num = parseFloat(prompt("Ingresa un número:"));
+            let diff = Math.abs(num - 19);
+            let resultado = num > 19 ? diff * 3 : diff;
+            alert("Resultado: " + resultado);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Días de la semana - map() y reduce()</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f4f7fa;
+      color: #222;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #005a8d;
+    }
+
+    section {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      max-width: 700px;
+      margin: 30px auto;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 25px;
+    }
+
+    .resultado {
+      font-weight: bold;
+      color: #005a8d;
+    }
+
+    .boton {
+      display: block;
+      width: fit-content;
+      margin: 15px auto 0;
+      background-color: #005a8d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .boton:hover {
+      background-color: #0073b1;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Días de la Semana - Uso de map() y reduce()</h1>
+
+  <section>
+    <h2>1️⃣ Días de la semana:</h2>
+    <ul id="listaDias"></ul>
+
+    <h2>2️⃣ Longitud de cada día (map):</h2>
+    <p class="resultado" id="resultadoMap"></p>
+
+    <h2>3️⃣ Suma total de caracteres (reduce):</h2>
+    <p class="resultado" id="resultadoReduce"></p>
+
+    <button class="boton" id="mostrarConsola">Mostrar también en consola</button>
+  </section>
+
+  <footer>
+    Ejemplo realizado con JavaScript moderno — © 2025
+  </footer>
+
+  <script>
+    // Array con los días de la semana en español
+    const diasSemana = [
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+      "Domingo"
+    ];
+
+    // Mostrar los días en una lista en el HTML
+    const listaDias = document.getElementById("listaDias");
+    diasSemana.forEach(dia => {
+      const li = document.createElement("li");
+      li.textContent = dia;
+      listaDias.appendChild(li);
+    });
+
+    // Usar map() para obtener las longitudes de cada día
+    const longitudes = diasSemana.map(dia => dia.length);
+
+    // Usar reduce() para sumar todas las longitudes
+    const sumaTotal = longitudes.reduce((acumulador, valor) => acumulador + valor, 0);
+
+    // Mostrar los resultados en el HTML
+    document.getElementById("resultadoMap").textContent = `[ ${longitudes.join(", ")} ]`;
+    document.getElementById("resultadoReduce").textContent = sumaTotal;
+
+    // Mostrar también en la consola
+    console.log("Array de días:", diasSemana);
+    console.log("Longitudes (map):", longitudes);
+    console.log("Suma total (reduce):", sumaTotal);
+
+    // Botón para volver a mostrar en la consola
+    document.getElementById("mostrarConsola").addEventListener("click", () => {
+      console.log("Array de días:", diasSemana);
+      console.log("Longitudes (map):", longitudes);
+      console.log("Suma total (reduce):", sumaTotal);
+      alert("Resultados mostrados en la consola ✅");
+    });
+  </script>
+</body>
+</html>

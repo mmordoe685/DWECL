@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 15: Diferencia con 13</title>
+</head>
+<body>
+    <h1>Ejercicio 15: Diferencia con 13</h1>
+    <button onclick="diferenciaCon13()">Calcular</button>
+
+    <script>
+        function diferenciaCon13() {
+            let num = parseFloat(prompt("Ingresa un número:"));
+            let diff = num - 13;
+            let resultado = num > 13 ? Math.abs(diff) * 2 : Math.abs(diff);
+            alert("Resultado: " + resultado);
+        }
+    </script>
+</body>
+</html>
+
