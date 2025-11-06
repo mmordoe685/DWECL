@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 4a - Suma de matriz</title>
+</head>
+<body>
+<h2>4a: Calcular la suma de una matriz de números</h2>
+
+<label>Matriz (números separados por comas): 
+<input id="e4a_array" type="text" size="40" value="1,2,3,4,5,6"></label>
+<button onclick="ej4a()">Calcular suma</button>
+
+<p>Resultado: <span id="e4a_result"></span></p>
+
+<script>
+function sumaArray(arr){
+  return arr.reduce((acum, val) => acum + val, 0);
+}
+
+function ej4a(){
+  const input = document.getElementById('e4a_array').value;
+  const arr = input.split(',').map(n => parseFloat(n)).filter(n => !isNaN(n));
+  document.getElementById('e4a_result').textContent = sumaArray(arr);
+}
+</script>
+</body>
+</html>

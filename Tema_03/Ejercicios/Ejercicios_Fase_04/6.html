@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 6 - Valor más alto</title>
+</head>
+<body>
+<h2>6: Encontrar el valor más alto en una matriz</h2>
+
+<label>Matriz: <input id="e6_array" type="text" size="40" value="11,3,16,90"></label>
+<button onclick="ej6()">Buscar máximo</button>
+
+<p>Resultado: <span id="e6_result"></span></p>
+
+<script>
+function valorMasAlto(arr){
+  return Math.max(...arr);
+}
+
+function ej6(){
+  const arr = document.getElementById('e6_array').value.split(',').map(Number);
+  document.getElementById('e6_result').textContent = valorMasAlto(arr);
+}
+</script>
+</body>
+</html>

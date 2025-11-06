@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 8a - Diferencia entre fechas</title>
+</head>
+<body>
+<h2>8a: Calcular diferencia entre dos fechas en días</h2>
+
+<label>Fecha 1: <input id="e8a_f1" type="date" value="2025-01-01"></label>
+<label>Fecha 2: <input id="e8a_f2" type="date" value="2025-02-01"></label>
+<button onclick="ej8a()">Calcular diferencia</button>
+
+<p>Resultado: <span id="e8a_result"></span></p>
+
+<script>
+function diferenciaDias(f1, f2){
+  const msPorDia = 1000 * 60 * 60 * 24;
+  const diff = Math.abs(f2 - f1);
+  return Math.round(diff / msPorDia);
+}
+
+function ej8a(){
+  const fecha1 = new Date(document.getElementById('e8a_f1').value);
+  const fecha2 = new Date(document.getElementById('e8a_f2').value);
+  document.getElementById('e8a_result').textContent = diferenciaDias(fecha1, fecha2) + " días";
+}
+</script>
+</body>
+</html>

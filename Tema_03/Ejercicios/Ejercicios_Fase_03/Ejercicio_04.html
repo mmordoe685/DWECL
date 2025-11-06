@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 4 - Extraer caracteres</title>
+</head>
+<body>
+<h2>Ejercicio 4: Extraer un número específico de caracteres</h2>
+
+<label>Cadena: <input id="e4_text" type="text" size="50" value="JavaScript es genial"></label><br>
+<label>Nº de caracteres: <input id="e4_num" type="number" value="10" min="0"></label>
+<select id="e4_mode">
+  <option value="start">Desde el inicio</option>
+  <option value="end">Desde el final</option>
+</select>
+<button onclick="ej4()">Extraer</button>
+
+<p>Resultado: <span id="e4_result"></span></p>
+
+<script>
+function extraerCaracteres(cadena, numero, modo = 'start') {
+  cadena = String(cadena);
+  numero = Number(numero);
+  if (isNaN(numero) || numero <= 0) return '';
+  if (modo === 'end') {
+    return cadena.slice(-numero);
+  }
+  // start
+  return cadena.slice(0, numero);
+}
+
+function ej4(){
+  const texto = document.getElementById('e4_text').value;
+  const num = document.getElementById('e4_num').value;
+  const modo = document.getElementById('e4_mode').value;
+  document.getElementById('e4_result').textContent = extraerCaracteres(texto, num, modo);
+}
+</script>
+</body>
+</html>

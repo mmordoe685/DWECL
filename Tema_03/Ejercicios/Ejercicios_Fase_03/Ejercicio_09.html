@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 9 - Capitalizar palabras</title>
+</head>
+<body>
+<h2>Ejercicio 9: Poner en mayúscula la primera letra de cada palabra</h2>
+
+<label>Texto: <input id="e9_text" type="text" size="60" value="hola mundo desde javascript"></label>
+<button onclick="ej9()">Capitalizar</button>
+
+<p>Resultado: <span id="e9_result"></span></p>
+
+<script>
+/*
+  capitalizarPalabras: convierte la primera letra de cada palabra en mayúscula.
+  Conserva el resto del texto tal cual (excepto que se usa toLowerCase() si así se desea),
+  y maneja múltiples espacios correctamente.
+*/
+function capitalizarPalabras(cadena) {
+  // Trim inicial/final, y mantener múltiples espacios internos
+  return String(cadena).split(' ').map(word => {
+    if (!word) return ''; // conserva espacios
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }).join(' ');
+}
+
+function ej9(){
+  const txt = document.getElementById('e9_text').value;
+  document.getElementById('e9_result').textContent = capitalizarPalabras(txt);
+}
+</script>
+</body>
+</html>

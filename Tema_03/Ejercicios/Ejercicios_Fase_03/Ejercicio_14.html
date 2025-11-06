@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 14 - Insertar cadena</title>
+</head>
+<body>
+<h2>Ejercicio 14: Insertar una cadena en una posición (1-based)</h2>
+
+<label>Texto base: <input id="e14_text" type="text" size="60" value="Estamos haciendo algunos ejercicios."></label><br>
+<label>Cadena a insertar: <input id="e14_insert" type="text" size="30" value="de JavaScript"></label><br>
+<label>Posición (1 = inicio): <input id="e14_pos" type="number" min="1" value="1"></label>
+<button onclick="ej14()">Insertar</button>
+
+<p>Resultado: <span id="e14_result"></span></p>
+
+<script>
+/*
+  insert(texto, cadenaInsertar = '', posicion = 1)
+  - posicion es 1-based: 1 = antes del primer carácter, 2 = entre char1 y char2, etc.
+  - si posicion > longitud+1 -> se añade al final.
+*/
+function insert(texto, cadenaInsertar = '', posicion = 1) {
+  texto = String(texto);
+  cadenaInsertar = String(cadenaInsertar);
+  // normalizamos posicion a entero 1-based
+  posicion = parseInt(posicion, 10);
+  if (isNaN(posicion) || posicion < 1) posicion = 1;
+  const idx = Math.min(Math.max(0, posicion - 1), texto.length); // 0-based index
+  return texto.slice(0, idx) + cadenaInsertar + texto.slice(idx);
+}
+
+function ej14(){
+  const texto = document.getElementById('e14_text').value;
+  const cad = document.getElementById('e14_insert').value;
+  const pos = document.getElementById('e14_pos').value;
+  document.getElementById('e14_result').textContent = insert(texto, cad, pos);
+}
+</script>
+</body>
+</html>

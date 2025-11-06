@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 6 - Proteger email</title>
+</head>
+<body>
+<h2>Ejercicio 6: Ocultar dirección de correo electrónico</h2>
+
+<label>Email: <input id="e6_email" type="text" size="40" value="rob_hood@example.com"></label>
+<button onclick="ej6()">Proteger</button>
+
+<p>Resultado: <code id="e6_result"></code></p>
+
+<script>
+function protege_email(email) {
+  if (!email) return '';
+  email = String(email).trim();
+  const atIndex = email.indexOf('@');
+  if (atIndex === -1) return email; // no es un email clásico
+  const local = email.slice(0, atIndex);
+  const domain = email.slice(atIndex + 1);
+  // Mostramos los primeros 3 caracteres del local (o menos si local es más corto)
+  const visible = local.length <= 3 ? local : local.slice(0, 3);
+  return `${visible}...@${domain}`;
+}
+
+function ej6(){
+  const email = document.getElementById('e6_email').value;
+  document.getElementById('e6_result').textContent = protege_email(email);
+}
+</script>
+</body>
+</html>

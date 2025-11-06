@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Adivina la Contraseña</title>
+</head>
+<body>
+  <h1>Adivina la Contraseña</h1>
+  <p>3 jugadores intentan adivinar la contraseña secreta.</p>
+  <p>Reglas:</p>
+  <ul>
+    <li>Vocal correcta = 1 punto</li>
+    <li>Consonante correcta = 2 puntos</li>
+    <li>Número correcto = 3 puntos</li>
+  </ul>
+
+  <p><b>Escriban sus palabras:</b></p>
+  <p>Jugador 1: <input id="j1" type="text"></p>
+  <p>Jugador 2: <input id="j2" type="text"></p>
+  <p>Jugador 3: <input id="j3" type="text"></p>
+
+  <button onclick="jugar()">Jugar</button>
+
+  <h2>Resultados:</h2>
+  <pre id="salida"></pre>
+
+  <script>
+    const contraseña = "L4ultimavezKtelod1go";
+
+    function calcularPuntaje(palabra, clave) {
+      let puntos = 0;
+      let aciertos = [];
+
+      for (let letra of palabra) {
+        if (clave.includes(letra)) {
+          aciertos.push(letra);
+          if ("aeiouAEIOU".includes(letra)) puntos += 1;
+          else if (/[0-9]/.test(letra)) puntos += 3;
+          else puntos += 2;
+        }
+      }
+
+      return { puntos, aciertos };
+    }
+
+    function jugar() {
+      const j1 = document.getElementById("j1").value;
+      const j2 = document.getElementById("j2").value;
+      const j3 = document.getElementById("j3").value;
+
+      const jugadores = [
+        { nombre: "Jugador 1", palabra: j1 },
+        { nombre: "Jugador 2", palabra: j2 },
+        { nombre: "Jugador 3", palabra: j3 }
+      ];
+
+      let texto = "";
+
+      for (let j of jugadores) {
+        const r = calcularPuntaje(j.palabra, contraseña);
+        texto += `${j.nombre}:\n`;
+        texto += `  Letras acertadas: ${r.aciertos.join(" ") || "Ninguna"}\n`;
+        texto += `  Puntuación total: ${r.puntos} puntos\n\n`;
+      }
+
+      texto += `La contraseña era: ${contraseña}`;
+      document.getElementById("salida").textContent = texto;
+    }
+  </script>
+</body>
+</html>

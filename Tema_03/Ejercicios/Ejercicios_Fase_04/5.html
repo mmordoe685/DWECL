@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 5 - Unir elementos</title>
+</head>
+<body>
+<h2>5: Unir todos los elementos de una matriz en una cadena</h2>
+
+<label>Matriz: <input id="e5_array" type="text" size="40" value="Rojo,Verde,Azul"></label>
+<button onclick="ej5()">Unir</button>
+
+<p>Resultado: <span id="e5_result"></span></p>
+
+<script>
+function unirElementos(arr){
+  return arr.join(' ');
+}
+
+function ej5(){
+  const arr = document.getElementById('e5_array').value.split(',');
+  document.getElementById('e5_result').textContent = unirElementos(arr);
+}
+</script>
+</body>
+</html>

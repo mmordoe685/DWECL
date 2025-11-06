@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 18 - Producto de matriz</title>
+</head>
+<body>
+<h2>18: Calcular el producto de los valores de una matriz</h2>
+
+<label>Matriz: <input id="e18_array" type="text" size="40" value="1,2,3,4"></label>
+<button onclick="ej18()">Calcular producto</button>
+
+<p>Resultado: <span id="e18_result"></span></p>
+
+<script>
+function productoArray(arr){
+  return arr.reduce((prod, val) => prod * val, 1);
+}
+
+function ej18(){
+  const arr = document.getElementById('e18_array').value.split(',').map(Number);
+  document.getElementById('e18_result').textContent = productoArray(arr);
+}
+</script>
+</body>
+</html>

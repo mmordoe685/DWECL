@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 18 - Contar subcadena</title>
+</head>
+<body>
+<h2>Ejercicio 18: Contar la aparición de una subcadena</h2>
+
+<label>Texto: <input id="e18_text" type="text" size="60" value="Hola hola, HOla mundo."></label><br>
+<label>Subcadena: <input id="e18_sub" type="text" value="hola"></label><br>
+<label><input id="e18_overlap" type="checkbox"> Contar solapamientos (ej. "aaa" buscando "aa" → 2)</label><br>
+<button onclick="ej18()">Contar</button>
+
+<p>Resultado: <span id="e18_result"></span></p>
+
+<script>
+function contarSubcadena(texto, subcadena, solapamiento = false) {
+  texto = String(texto);
+  subcadena = String(subcadena);
+  if (subcadena === '') return 0;
+  const flags = 'i'; // insensible a mayúsculas (puedes cambiar)
+  if (solapamiento) {
+    // lookahead para contar solapamientos
+    const regex = new RegExp(`(?=${escapeRegExp(subcadena)})`, flags);
+    return (texto.match(regex) || []).length;
+  } else {
+    const regex = new RegExp(escapeRegExp(subcadena), flags + 'g');
+    return (texto.match(regex) || []).length;
+  }
+}
+
+// helper: escapa caracteres especiales para regex
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function ej18(){
+  const texto = document.getElementById('e18_text').value;
+  const sub = document.getElementById('e18_sub').value;
+  const sol = document.getElementById('e18_overlap').checked;
+  document.getElementById('e18_result').textContent = contarSubcadena(texto, sub, sol);
+}
+</script>
+</body>
+</html>

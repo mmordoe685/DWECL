@@ -11,6 +11,7 @@
         a { text-decoration: none; color: #0077cc; }
         a:hover { text-decoration: underline; }
         .folder { font-weight: bold; margin-top: 15px; }
+        .subfolder { margin-left: 20px; font-style: italic; }
     </style>
 </head>
 <body>
@@ -18,8 +19,17 @@
 
     <div class="folder">Temas</div>
     <ul>
-        <li><a href="Tema_01/" target="_blank">Tema_01</a></li>
-        <li><a href="Tema_02/" target="_blank">Tema_02</li>
+        <li>
+            <a href="Tema_01/" target="_blank">Tema_01</a>
+            <ul>
+                <li class="subfolder"><a href="Tema_01/Subtema_01/" target="_blank">Subtema_01</a></li>
+                <!-- Puedes agregar más subcarpetas aquí -->
+            </ul>
+        </li>
+        <li>
+            <a href="Tema_02/" target="_blank">Tema_02</a>
+            <!-- Si Tema_02 tiene subcarpetas, se agregan igual -->
+        </li>
     </ul>
 
 </body>

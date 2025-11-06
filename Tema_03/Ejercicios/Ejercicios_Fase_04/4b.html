@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 4b - Días del mes</title>
+</head>
+<body>
+<h2>4b: Obtener cantidad de días de un mes y año</h2>
+
+<label>Mes (1-12): <input id="e4b_mes" type="number" min="1" max="12" value="2"></label>
+<label>Año: <input id="e4b_anio" type="number" value="2024"></label>
+<button onclick="ej4b()">Calcular días</button>
+
+<p>Resultado: <span id="e4b_result"></span></p>
+
+<script>
+function diasEnMes(mes, anio){
+  return new Date(anio, mes, 0).getDate();
+}
+
+function ej4b(){
+  const mes = parseInt(document.getElementById('e4b_mes').value);
+  const anio = parseInt(document.getElementById('e4b_anio').value);
+  document.getElementById('e4b_result').textContent = diasEnMes(mes, anio) + " días";
+}
+</script>
+</body>
+</html>

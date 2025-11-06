@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 29 - Buscar palabra</title>
+</head>
+<body>
+<h2>Ejercicio 29: Buscar palabra dentro de una cadena</h2>
+
+<label>Texto: <input id="e29_text" type="text" size="60" value="El zorro marrón"></label><br>
+<label>Palabra a buscar: <input id="e29_word" type="text" value="zorro"></label><br>
+<button onclick="ej29()">Buscar</button>
+
+<p>Resultado: <span id="e29_result"></span></p>
+
+<script>
+function palabra_busqueda(texto, palabra) {
+  texto = String(texto);
+  palabra = String(palabra).trim();
+  if (palabra === '') return `'${palabra}' se encontró 0 veces.`;
+  // Usamos búsqueda de palabra completa (\\b) para evitar coincidencias parciales
+  const regex = new RegExp('\\b' + escapeRegExp(palabra) + '\\b', 'gi');
+  const matches = texto.match(regex);
+  const count = matches ? matches.length : 0;
+  return `'${palabra}' se encontró ${count} ${count === 1 ? 'vez' : 'veces'}.`;
+}
+
+// reusar helper
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function ej29(){
+  const texto = document.getElementById('e29_text').value;
+  const palabra = document.getElementById('e29_word').value;
+  document.getElementById('e29_result').textContent = palabra_busqueda(texto, palabra);
+}
+</script>
+</body>
+</html>

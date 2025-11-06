@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 31b - Eliminar elemento</title>
+</head>
+<body>
+<h2>31b: Eliminar un elemento específico de una matriz</h2>
+
+<label>Matriz: <input id="e31b_array" type="text" size="40" value="2,4,5,9"></label>
+<label>Elemento a eliminar: <input id="e31b_eliminar" type="text" value="5"></label>
+<button onclick="ej31b()">Eliminar</button>
+
+<p>Resultado: <span id="e31b_result"></span></p>
+
+<script>
+function removerElemento(arr, elem){
+  return arr.filter(x => x != elem);
+}
+
+function ej31b(){
+  const arr = document.getElementById('e31b_array').value.split(',').map(x => x.trim());
+  const elem = document.getElementById('e31b_eliminar').value.trim();
+  document.getElementById('e31b_result').textContent = JSON.stringify(removerElemento(arr, elem));
+}
+</script>
+</body>
+</html>

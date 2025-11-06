@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 31 - Mayor de tres números</title>
+</head>
+<body>
+<h2>31: Obtener el número más alto de tres números</h2>
+
+<label>A: <input id="e31_a" type="number" value="5"></label>
+<label>B: <input id="e31_b" type="number" value="9"></label>
+<label>C: <input id="e31_c" type="number" value="3"></label>
+<button onclick="ej31()">Calcular mayor</button>
+
+<p>Resultado: <span id="e31_result"></span></p>
+
+<script>
+function mayorDeTres(a, b, c){
+  return Math.max(a, b, c);
+}
+
+function ej31(){
+  const a = parseFloat(document.getElementById('e31_a').value);
+  const b = parseFloat(document.getElementById('e31_b').value);
+  const c = parseFloat(document.getElementById('e31_c').value);
+  document.getElementById('e31_result').textContent = mayorDeTres(a, b, c);
+}
+</script>
+</body>
+</html>

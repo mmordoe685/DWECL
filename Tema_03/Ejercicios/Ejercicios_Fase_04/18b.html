@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ejercicio 8b - Elemento más frecuente</title>
+</head>
+<body>
+<h2>8b: Encontrar el elemento más frecuente de una matriz</h2>
+
+<label>Matriz: <input id="e8b_array" type="text" size="40" value="1,2,2,3,3,3,4"></label>
+<button onclick="ej8b()">Buscar más frecuente</button>
+
+<p>Resultado: <span id="e8b_result"></span></p>
+
+<script>
+function elementoMasFrecuente(arr){
+  const frecuencia = {};
+  let max = 0, elemento = null;
+  arr.forEach(v => {
+    frecuencia[v] = (frecuencia[v] || 0) + 1;
+    if (frecuencia[v] > max){
+      max = frecuencia[v];
+      elemento = v;
+    }
+  });
+  return { elemento, veces: max };
+}
+
+function ej8b(){
+  const arr = document.getElementById('e8b_array').value.split(',');
+  const res = elementoMasFrecuente(arr);
+  document.getElementById('e8b_result').textContent = 
+    `Elemento más frecuente: ${res.elemento} (${res.veces} veces)`;
+}
+</script>
+</body>
+</html>
