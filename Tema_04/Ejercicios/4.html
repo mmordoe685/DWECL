@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 4 - Detectar botón del ratón</title>
+</head>
+<body>
+  <h2>Ejercicio 4</h2>
+  <p>Haz click en cualquier parte de la pantalla.</p>
+
+  <script>
+    document.addEventListener('mousedown', (e) => {
+      if (e.button === 0) {
+        alert('Has pulsado el botón izquierdo.');
+      } else if (e.button === 2) {
+        alert('Has pulsado el botón derecho.');
+      }
+    });
+  </script>
+</body>
+</html>

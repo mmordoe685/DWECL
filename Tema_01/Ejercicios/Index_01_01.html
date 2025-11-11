@@ -175,6 +175,12 @@
       justify-items: center;
     }
 
+    /* Centrar el último recuadro si hay número impar */
+    .content-container a:last-child:nth-child(odd) {
+      grid-column: span 2;
+      justify-self: center;
+    }
+
     .recuadro {
       display: flex;
       align-items: center;
@@ -264,12 +270,15 @@
     </header>
 
     <nav>
-      <h2>Tema 1</h2>
+      <h2>Ejercicios Tema 1</h2>
     </nav>
 
     <div class="content-container">
-      <a href="Ejercicios/Index_01_01.html" target="_blank" class="recuadro">Ejercicios</a>
-      <a href="Teoria/Index_01_02.html" target="_blank" class="recuadro">Teoria</a>
+      <a href="Ejercicio_1.html" target="_blank" class="recuadro">Ejercicio 1</a>
+      <a href="Ejercicio_2.html" target="_blank" class="recuadro">Ejercicio 2</a>
+      <a href="Ejercicio_3.html" target="_blank" class="recuadro">Ejercicio 3</a>
+      <a href="Ejercicio_4.html" target="_blank" class="recuadro">Ejercicio 4</a>
+      <a href="Ejercicio_5.html" target="_blank" class="recuadro">Ejercicio 5</a>
     </div>
 
     <footer>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 5 - Mostrar URL de imagen</title>
+</head>
+<body>
+  <h2>Ejercicio 5</h2>
+  <img src="https://via.placeholder.com/150" alt="img1">
+  <img src="https://via.placeholder.com/200" alt="img2">
+
+  <script>
+    const imagenes = document.querySelectorAll('img');
+    imagenes.forEach(img => {
+      img.addEventListener('mouseover', () => {
+        alert('URL: ' + img.src);
+      });
+    });
+  </script>
+</body>
+</html>

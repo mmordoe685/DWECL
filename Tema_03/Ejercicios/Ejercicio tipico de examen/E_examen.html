@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contador de Palabras</title>
+</head>
+<body>
+    <h2>Contador de Palabras</h2>
+    <textarea id="texto" rows="5" cols="50" placeholder="Escribe tu texto aquí..."></textarea>
+    <br>
+    <button onclick="mostrarResultado()">Analizar Texto</button>
+    <div id="resultado"></div>
+
+    <script>
+        function analizarTexto(texto) {
+            // Convertir a minúsculas
+            texto = texto.toLowerCase();
+            
+            // Eliminar signos de puntuación
+            texto = texto.replace(/[.,;:!?]/g, '');
+            
+            // Separar palabras por espacios
+            const palabras = texto.split(/\s+/).filter(p => p !== '');
+            
+            // Crear un Map para contar palabras
+            const contador = new Map();
+            
+            for (const palabra of palabras) {
+                if (contador.has(palabra)) {
+                    contador.set(palabra, contador.get(palabra) + 1);
+                } else {
+                    contador.set(palabra, 1);
+                }
+            }
+            
+            // Devolver Map y total de palabras
+            return { contador, total: palabras.length };
+        }
+
+        function mostrarResultado() {
+            const texto = document.getElementById('texto').value;
+            const { contador, total } = analizarTexto(texto);
+            
+            let html = `<h3>Resultado:</h3>`;
+            html += `<p><strong>Total de palabras:</strong> ${total}</p>`;
+            html += '<ul>';
+            for (const [palabra, cantidad] of contador) {
+                html += `<li>${palabra}: ${cantidad}</li>`;
+            }
+            html += '</ul>';
+            document.getElementById('resultado').innerHTML = html;
+        }
+    </script>
+</body>
+</html>

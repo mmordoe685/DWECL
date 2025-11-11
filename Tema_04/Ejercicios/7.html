@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 7 - Mover caja con teclado</title>
+<style>
+  #caja {
+    width: 100px;
+    height: 100px;
+    background-color: tomato;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+  }
+</style>
+</head>
+<body>
+  <h2>Ejercicio 7</h2>
+  <div id="caja"></div>
+
+  <script>
+    const caja = document.getElementById('caja');
+    let posX = 100, posY = 100;
+
+    document.addEventListener('keydown', (e) => {
+      const paso = 10;
+      switch(e.key) {
+        case 'ArrowUp': case '8': posY -= paso; break;
+        case 'ArrowDown': case '2': posY += paso; break;
+        case 'ArrowLeft': case '4': posX -= paso; break;
+        case 'ArrowRight': case '6': posX += paso; break;
+      }
+      caja.style.top = posY + 'px';
+      caja.style.left = posX + 'px';
+    });
+  </script>
+</body>
+</html>

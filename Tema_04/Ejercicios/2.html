@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 2 - Eventos de color</title>
+</head>
+<body>
+  <h2>Ejercicio 2</h2>
+  <div id="cuadro" style="width:200px;height:100px;border:1px solid #000;text-align:center;line-height:100px;">Mensaje</div>
+
+  <script>
+    const cuadro = document.getElementById('cuadro');
+
+    document.addEventListener('mousedown', () => {
+      cuadro.style.backgroundColor = '#FFFF00';
+    });
+
+    document.addEventListener('keydown', () => {
+      cuadro.style.backgroundColor = '#CCE6FF';
+    });
+
+    document.addEventListener('mousemove', () => {
+      cuadro.style.backgroundColor = '#FFFFFF';
+    });
+  </script>
+</body>
+</html>

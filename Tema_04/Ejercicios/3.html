@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 3 - Deshabilitar botón derecho</title>
+</head>
+<body>
+  <h2>Ejercicio 3</h2>
+  <p>Haz click derecho y verás que está deshabilitado.</p>
+
+  <script>
+    document.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+      alert('Botón derecho deshabilitado');
+    });
+  </script>
+</body>
+</html>

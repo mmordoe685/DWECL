@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 1 - Cambiar imagen al hacer click</title>
+<style>
+  img {
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <h2>Ejercicio 1</h2>
+  <img id="imagen" src="imagen1.jpg" alt="Imagen inicial">
+
+  <script>
+    const img = document.getElementById('imagen');
+    img.addEventListener('mousedown', () => {
+      img.src = 'imagen2.jpg';
+    });
+    img.addEventListener('mouseup', () => {
+      img.src = 'imagen1.jpg';
+    });
+  </script>
+</body>
+</html>

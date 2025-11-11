@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 6 - Mostrar tecla pulsada</title>
+</head>
+<body>
+  <h2>Ejercicio 6</h2>
+  <p id="mensaje">Presiona una tecla...</p>
+
+  <script>
+    document.addEventListener('keydown', (e) => {
+      let texto = `Tecla: ${e.key}`;
+      if (e.altKey) texto += ' + ALT';
+      if (e.shiftKey) texto += ' + SHIFT';
+      if (e.ctrlKey) texto += ' + CTRL';
+      document.getElementById('mensaje').textContent = texto;
+    });
+  </script>
+</body>
+</html>

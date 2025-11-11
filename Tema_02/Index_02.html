@@ -1,199 +1,306 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Marcos Morales Doello - DWECL</title>
-    <!-- Fuente moderna y profesional -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Reset básico para asegurar consistencia entre navegadores */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marcos Morales Doello · DWECL</title>
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #2c3e50, #34495e); /* Degradado elegante */
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
+  <!-- Fuente profesional -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        /* Contenedor principal que centraliza todo */
-        .main-container {
-            background-color: #ffffff;
-            color: #333333;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra suave */
-            max-width: 900px;
-            width: 90%;
-            padding: 40px;
-            text-align: center;
-        }
+  <style>
+    /* ===== RESET Y VARIABLES ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        header {
-            background-color: transparent;
-            margin-bottom: 40px;
-        }
+    :root {
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --bg-light: #f9fafb;
+      --bg-dark: #0f172a;
+      --text-light: #1e293b;
+      --text-dark: #e2e8f0;
+      --card-light: #ffffff;
+      --card-dark: #1e293b;
+      --border-light: #e2e8f0;
+      --border-dark: #334155;
+      --transition: 0.3s ease;
+    }
 
-        header h1 {
-            font-size: 2.8rem;
-            color: #2c3e50;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      .main-container {
+        background-color: var(--card-dark);
+        border: 1px solid var(--border-dark);
+      }
+      .recuadro {
+        background-color: #27334b;
+        border: 1px solid #384760;
+      }
+      .recuadro:hover {
+        background-color: #32425c;
+      }
+      header h1, footer b {
+        color: var(--accent);
+      }
+      .tooltip {
+        background-color: #1e293b;
+        border-color: #3b82f6;
+      }
+    }
 
-        nav {
-            background-color: transparent;
-            color: #2c3e50;
-            margin-bottom: 40px;
-        }
+    /* ===== ESTILO GLOBAL ===== */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      transition: background-color var(--transition), color var(--transition);
+    }
 
-        nav h2 {
-            font-size: 1.8rem;
-            font-weight: 500;
-        }
+    /* ===== CONTENEDOR PRINCIPAL ===== */
+    .main-container {
+      background-color: var(--card-light);
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      max-width: 900px;
+      width: 100%;
+      padding: 50px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      transition: var(--transition);
+      animation: fadeIn 0.7s ease forwards;
+    }
 
-        /* Estilo de las tarjetas de contenido */
-        .content-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .recuadro {
-            background-color: #f7f9fc;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: left;
-        }
+    /* ===== CABECERA ===== */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+    }
 
-        .recuadro:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Mayor sombra al hacer hover */
-        }
+    .logo span {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
 
-        h3 {
-            font-size: 1.6rem;
-            margin-bottom: 15px;
-            color: #34495e;
-        }
+    .social {
+      display: flex;
+      gap: 16px;
+      position: relative;
+    }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+    .social button, .social a {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.3rem;
+      opacity: 0.7;
+      color: var(--text-light);
+      transition: opacity var(--transition), transform var(--transition), color var(--transition);
+    }
 
-        ul li {
-            margin: 10px 0;
-        }
+    .social a:hover, .social button:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+      color: var(--accent);
+    }
 
-        ul li a {
-            color: #3498db;
-            font-weight: 500;
-            text-decoration: none;
-        }
+    /* ===== TOOLTIP EMAIL ===== */
+    .tooltip {
+      position: absolute;
+      top: 35px;
+      right: 0;
+      background-color: #fff;
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      padding: 12px 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      font-size: 0.9rem;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 10;
+    }
 
-        ul li a:hover {
-            text-decoration: underline;
-        }
+    .tooltip button {
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
 
-        footer {
-            margin-top: 40px;
-            color: #95a5a6;
-        }
+    .tooltip button:hover {
+      background-color: var(--accent-hover);
+    }
 
-        footer b {
-            color: #2c3e50;
-        }
+    /* ===== SUBTÍTULO ===== */
+    nav h2 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #64748b;
+      margin-bottom: 35px;
+      text-align: center;
+    }
 
-        /* Estilo responsive para móviles */
-        @media (max-width: 768px) {
-            .recuadro {
-                width: 100%;
-            }
+    /* ===== TARJETAS ===== */
+    .content-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      justify-items: center;
+    }
 
-            header h1 {
-                font-size: 2.2rem;
-            }
+    .recuadro {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 40px 22px;
+      transition: var(--transition);
+      text-align: center;
+      width: 100%;
+      max-width: 320px;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: var(--accent);
+    }
 
-            nav h2 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    .recuadro:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.06);
+      background-color: #eef3ff;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+
+    footer b {
+      color: var(--accent);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 700px) {
+      .content-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main-container {
+        padding: 30px 22px;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo span {
+        font-size: 1.6rem;
+      }
+
+      .tooltip {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="main-container">
+    <header>
+      <div class="logo">
+        <span>Marcos Morales Doello</span>
+      </div>
+      <div class="social">
+        <a href="https://github.com/mmordoe685/DWECL.git" target="_blank" title="GitHub">🐙</a>
+        <a href="https://www.linkedin.com/in/marcos-morales-doello-077b6a331/" target="_blank" title="LinkedIn">💼</a>
+        <button id="emailBtn" title="Correo electrónico">✉️</button>
 
-    <div class="main-container">
-        <header>
-            <h1>Marcos Morales Doello</h1>
-        </header>
-
-        <nav>
-            <h2>Lenguaje de Marcas 1 DAW</h2>
-        </nav>
-
-        <div class="content-container">
-            <!-- Tema 1 -->
-            <div class="recuadro">
-                <section>
-                    <h3>TEMA_1</h3>
-                    <ul>
-                        <li><a href="Tema_01/Ejercicios/" target="_blank">Ejercicios</a></li>
-                        <ul>
-                            <li><a href="Tema_01/Ejercicios/Ejercicio_1.html" target="_blank">Ejercicio_1</a></li>
-                            <li><a href="Tema_01/Ejercicios/Ejercicio_2.html" target="_blank">Ejercicio_2</a></li>
-                            <li><a href="Tema_01/Ejercicios/Ejercicio_3.html" target="_blank">Ejercicio_3</a></li>
-                            <li><a href="Tema_01/Ejercicios/Ejercicio_4.html" target="_blank">Ejercicio_4</a></li>
-                            <li><a href="Tema_01/Ejercicios/Ejercicio_5.html" target="_blank">Ejercicio_5</a></li>
-                        </ul>
-                        <li><a href="Tema_01/Teoria/" target="_blank">Fechas</a></li>
-                    </ul>
-                </section>
-            </div>
-
-            <!-- Tema 2 -->
-            <div class="recuadro">
-                <section>
-                    <h3>TEMA 2: HTML</h3>
-                    <ul>
-                        <li><a href="Temario_LMSGI/Tema_2/LISTA/Lista.html" target="_blank">Listas</a></li>
-                        <li><a href="Temario_LMSGI/Tema_2/Tabla_Horario/Horario.HTML" target="_blank">Horario</a></li>
-                    </ul>
-                </section>
-            </div>
-
-            <!-- Tema 3 -->
-            <div class="recuadro">
-                <section>
-                    <h3>TEMA 3: (bootstrap // JavaScript)</h3>
-                    <ul>
-                        <li><a href="Temario_LMSGI/Tema_3/bootstrap/bootstrap_1.html" target="_blank">Bootstrap</a></li>
-                        <li><a href="Temario_LMSGI/Tema_3/Calculadora/item.html" target="_blank">Calculadora</a></li>
-                        <li><a href="Temario_LMSGI/Tema_3/JavaScript/4.1.html" target="_blank">Ejercicio 4.1</a></li>
-                        <li><a href="Temario_LMSGI/Tema_3/JavaScript/4.2.html" target="_blank">Ejercicio 4.2</a></li>
-
-                    </ul>
-                </section>
-            </div>
+        <!-- Tooltip de correo -->
+        <div class="tooltip" id="tooltip">
+          <span id="emailText">mmordoe685@g.educaand.es</span>
+          <button id="copyBtn">Copiar</button>
         </div>
+      </div>
+    </header>
 
-        <footer>
-            <b>mmordoe685@g.educaand.es</b> | <b>Act. 06/03/2025</b>
-        </footer>
+    <nav>
+      <h2>Tema 2</h2>
+    </nav>
+
+    <div class="content-container">
+      <a href="Ejercicios/Index_02_01.html" target="_blank" class="recuadro">Ejercicios</a>
+      <a href="Teoria/Index_02_02.html" target="_blank" class="recuadro">Teoria</a>
     </div>
 
-</body>
+    <footer>
+      <p>Actualizado <b>11/11/2025</b></p>
+    </footer>
+  </div>
 
+  <script>
+    // Mostrar/Ocultar tooltip del correo
+    const emailBtn = document.getElementById('emailBtn');
+    const tooltip = document.getElementById('tooltip');
+    const copyBtn = document.getElementById('copyBtn');
+    const emailText = document.getElementById('emailText');
+
+    emailBtn.addEventListener('click', () => {
+      tooltip.style.display = tooltip.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Cerrar tooltip al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!tooltip.contains(e.target) && e.target !== emailBtn) {
+        tooltip.style.display = 'none';
+      }
+    });
+
+    // Copiar correo al portapapeles
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(emailText.textContent);
+      copyBtn.textContent = "Copiado ✔";
+      setTimeout(() => copyBtn.textContent = "Copiar", 1500);
+    });
+  </script>
+</body>
 </html>
