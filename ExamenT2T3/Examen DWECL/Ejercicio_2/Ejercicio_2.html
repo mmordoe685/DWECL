@@ -1,0 +1,103 @@
+<!-- Marcos Morales Doello -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Menú de Módulos DAW</title>
+</head>
+
+<body>
+    <h1>Menú de Módulos DAW</h1>
+
+    <button onclick="mostrarNumeroModulos()">a. Mostrar número de módulos</button>
+    <button onclick="mostrarContenido()">b. Mostrar contenido de los módulos</button>
+    <button onclick="mostrarAbreviaturas()">c. Mostrar abreviaturas</button>
+    <button onclick="mostrarNombres()">d. Mostrar nombres completos</button>
+    <button onclick="consultarModulo()">e/f. Consultar módulo y actualizar nombre</button>
+
+    <div id="resultado" style="margin-top:20px; white-space: pre-wrap;"></div>
+
+    <script>
+        // Creamos un Map vacío para almacenar módulos
+        let modulos = new Map();
+
+        // Añadimos los módulos después de crear la estructura
+        modulos.set("PYN", "Python");
+        modulos.set("DAWEB", "Diseño de Aplicaciones Web");
+        modulos.set("PI", "Proyecto Intermodular");
+        modulos.set("ING", "Inglés");
+        modulos.set("DWECL", "Desarrollo Web en Entornos Cliente");
+        modulos.set("DIWEB", "Diseño de Interfaces Web");
+        modulos.set("DWESE", "Desarrollo Web en Entornos Servidor");
+        modulos.set("IPE", "Itinerario Personal de la Empresa");
+
+
+        const resultado = document.getElementById("resultado");
+
+        // a. Mostrar cuántos módulos hay
+        function mostrarNumeroModulos() {
+            resultado.textContent = "Número de módulos almacenados: " + modulos.size;
+        }
+
+        // b. Mostrar contenido completo
+        function mostrarContenido() {
+            let texto = "Contenido de los módulos:\n";
+            modulos.forEach((valor, clave) => {
+                texto += `${clave} -> ${valor}\n`;
+            });
+            resultado.textContent = texto;
+        }
+
+        // c. Mostrar solo abreviaturas
+        function mostrarAbreviaturas() {
+            let texto = "Abreviaturas de los módulos:\n";
+            for (let clave of modulos.keys()) {
+                texto += clave + "\n";
+            }
+            resultado.textContent = texto;
+        }
+
+        // d. Mostrar solo nombres completos
+        function mostrarNombres() {
+            let texto = "Nombres completos de los módulos:\n";
+            for (let valor of modulos.values()) {
+                texto += valor + "\n";
+            }
+            resultado.textContent = texto;
+        }
+
+        // e/f. Consultar si un módulo está y actualizar nombre
+        function consultarModulo() {
+            let busqueda = prompt("Introduce la abreviatura o el nombre completo del módulo:");
+            let encontrado = false;
+
+            // Revisamos si está como clave
+            if (modulos.has(busqueda)) {
+                resultado.textContent = `Sí, el módulo "${busqueda}" está en el mapa.`;
+                // f. Añadimos un "2" al final del nombre completo
+                modulos.set(busqueda, modulos.get(busqueda) + " 2");
+                resultado.textContent += `\nSe ha actualizado el nombre completo a: ${modulos.get(busqueda)}`;
+                encontrado = true;
+            } else {
+                // Revisamos si está como valor
+                for (let [clave, valor] of modulos.entries()) {
+                    if (valor === busqueda) {
+                        resultado.textContent = `Sí, el módulo "${valor}" está en el mapa.`;
+                        // f. Añadimos un "2" al final del nombre
+                        modulos.set(clave, valor + " 2");
+                        resultado.textContent += `\nSe ha actualizado el nombre completo a: ${modulos.get(clave)}`;
+                        encontrado = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!encontrado) {
+                resultado.textContent = "No, el módulo no está en el mapa.";
+            }
+        }
+    </script>
+</body>
+
+</html>

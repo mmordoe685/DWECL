@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Resolver Laberinto</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:20px;color:#111}
+    h1{font-size:1.4rem}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+    textarea{width:420px;height:160px;font-family:monospace;padding:8px}
+    .grid{display:inline-grid;grid-gap:2px;margin-top:12px}
+    .cell{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:14px}
+    .wall{background:#333;color:#fff}
+    .path{background:#b7e4c7}
+    .visited{background:#f0e68c}
+    .start{background:#4caf50;color:#fff}
+    .finish{background:#f44336;color:#fff}
+    .empty{background:#fafafa;border:1px solid #e0e0e0}
+    .legend{display:flex;gap:8px;margin-top:10px;align-items:center}
+    .legend .box{width:18px;height:18px;border-radius:3px;display:inline-block}
+    .note{margin-top:10px;font-size:0.9rem;color:#444}
+    a.pdf-link{display:inline-block;margin-left:8px}
+    button{padding:8px 12px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer}
+    button:hover{box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+  </style>
+</head>
+<body>
+  <h1>Visualizador y solucionador de laberintos (recursivo)</h1>
+  <div class="controls">
+    <div>
+      <div><strong>Matriz del laberinto</strong> (usa S, F, X y espacio):</div>
+      <textarea id="inputMaze">[
+  ["S", " ", "X", " "],
+  ["X", " ", "X", " "],
+  [" ", " ", " ", " "],
+  ["X", "X", " ", "F"]
+]</textarea>
+      <div style="margin-top:8px">
+        <button id="loadBtn">Cargar y dibujar</button>
+        <button id="solveBtn">Resolver</button>
+        <button id="resetBtn">Reset</button>
+        <button id="exampleBtn">Cargar ejemplo altern.</button>
+      </div>
+    </div>
+    <div>
+      <div><strong>Acciones</strong></div>
+      <div class="note">Pega una matriz en el textarea (como el ejemplo). Luego pulsa <em>Cargar y dibujar</em> y después <em>Resolver</em>.</div>
+      <div style="margin-top:8px">Ver enunciado (PDF): <a class="pdf-link" href="sandbox:/mnt/data/juego laberinto.pdf" target="_blank">Abrir PDF</a></div>
+      <div class="legend">
+        <div><span class="box start" style="display:inline-block"></span> S (inicio)</div>
+        <div><span class="box finish" style="display:inline-block"></span> F (final)</div>
+        <div><span class="box wall" style="display:inline-block"></span> X (pared)</div>
+        <div><span class="box empty" style="display:inline-block;border:1px solid #e0e0e0"></span> espacio</div>
+        <div><span class="box path" style="display:inline-block"></span> ruta</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="gridContainer"></div>
+
+  <script>
+    // --- Utilidades ---
+    function parseMaze(text){
+      // Intentaremos evaluar el texto como una matriz JS segura
+      try{
+        // eslint-disable-next-line no-new-func
+        const fn = new Function('return ' + text);
+        const mat = fn();
+        if(!Array.isArray(mat) || !Array.isArray(mat[0])) throw new Error('Formato incorrecto');
+        return mat;
+      }catch(e){
+        alert('Error al parsear la matriz: ' + e.message + '\nAsegúrate de usar el formato del ejemplo.');
+        return null;
+      }
+    }
+
+    // Dibuja la cuadrícula
+    function drawGrid(mat){
+      const rows = mat.length, cols = mat[0].length;
+      const container = document.getElementById('gridContainer');
+      container.innerHTML = '';
+      const grid = document.createElement('div');
+      grid.className = 'grid';
+      grid.style.gridTemplateColumns = `repeat(${cols}, auto)`;
+      grid.style.width = (cols * 30) + 'px';
+      // guardar referencia de celdas
+      window._cells = Array.from({length:rows}, ()=>Array(cols));
+
+      for(let i=0;i<rows;i++){
+        for(let j=0;j<cols;j++){
+          const div = document.createElement('div');
+          div.className = 'cell';
+          const v = mat[i][j];
+          if(v === 'X') div.classList.add('wall');
+          else if(v === 'S') div.classList.add('start');
+          else if(v === 'F') div.classList.add('finish');
+          else div.classList.add('empty');
+          div.textContent = (v === ' ' ? '' : v);
+          grid.appendChild(div);
+          window._cells[i][j] = div;
+        }
+      }
+      container.appendChild(grid);
+    }
+
+    // Encontrar S
+    function findStart(mat){
+      for(let i=0;i<mat.length;i++){
+        for(let j=0;j<mat[0].length;j++){
+          if(mat[i][j] === 'S') return [i,j];
+        }
+      }
+      return null;
+    }
+
+    // Resolver con recursión (devuelve true si encuentra y rellena 'ruta' con coordenadas)
+    function resolverLaberinto(mat, x, y, visitado, ruta){
+      // límites
+      if(x < 0 || y < 0 || x >= mat.length || y >= mat[0].length) return false;
+      if(mat[x][y] === 'X' || visitado[x][y]) return false;
+      visitado[x][y] = true;
+      // si es la meta
+      if(mat[x][y] === 'F'){
+        ruta.push([x,y]);
+        return true;
+      }
+      // intentar 4 direcciones
+      const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+      for(const [dx,dy] of dirs){
+        const nx = x + dx, ny = y + dy;
+        if(resolverLaberinto(mat, nx, ny, visitado, ruta)){
+          ruta.push([x,y]);
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Manejo de botones
+    document.getElementById('loadBtn').addEventListener('click', ()=>{
+      const text = document.getElementById('inputMaze').value.trim();
+      const mat = parseMaze(text);
+      if(!mat) return;
+      // Normalizar: asegurar que los espacios en blanco sean ' '
+      for(let i=0;i<mat.length;i++){
+        for(let j=0;j<mat[0].length;j++){
+          if(mat[i][j] === undefined || mat[i][j] === null) mat[i][j] = ' ';
+          // si es string con más de 1 char, tomar primer char
+          if(typeof mat[i][j] === 'string' && mat[i][j].length > 1) mat[i][j] = mat[i][j].trim();
+        }
+      }
+      window._currentMaze = mat;
+      drawGrid(mat);
+    });
+
+    document.getElementById('solveBtn').addEventListener('click', ()=>{
+      const mat = window._currentMaze;
+      if(!mat){ alert('Carga primero una matriz válida.'); return; }
+      const start = findStart(mat);
+      if(!start){ alert('No se encontró la celda S (inicio).'); return; }
+      const rows = mat.length, cols = mat[0].length;
+      const visitado = Array.from({length:rows}, ()=>Array(cols).fill(false));
+      const ruta = [];
+      const found = resolverLaberinto(mat, start[0], start[1], visitado, ruta);
+
+      // marcar visitadas (opcional)
+      for(let i=0;i<rows;i++){
+        for(let j=0;j<cols;j++){
+          if(visitado[i][j] && mat[i][j] === ' ') window._cells[i][j].classList.add('visited');
+        }
+      }
+
+      if(found){
+        // ruta viene en orden inverso (desde F hasta S)
+        ruta.reverse();
+        ruta.forEach(([x,y])=>{
+          const el = window._cells[x][y];
+          // evitar sobreescribir inicio/fin
+          if(!el.classList.contains('start') && !el.classList.contains('finish')){
+            el.classList.remove('visited','empty');
+            el.classList.add('path');
+          }
+        });
+        alert('¡Salida encontrada! (true)');
+      }else{
+        alert('No hay salida (false)');
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      if(!window._currentMaze) return;
+      drawGrid(window._currentMaze);
+    });
+
+    document.getElementById('exampleBtn').addEventListener('click', ()=>{
+      const sample = '[\n  ["S"," "," ","X","F"],\n  [" ","X"," ","X"," "],\n  [" "," "," "," "," "],\n  ["X","X"," ","X"," "],\n]';
+      document.getElementById('inputMaze').value = sample;
+    });
+
+    // Cargar automáticamente el ejemplo al abrir
+    document.getElementById('loadBtn').click();
+  </script>
+</body>
+</html>

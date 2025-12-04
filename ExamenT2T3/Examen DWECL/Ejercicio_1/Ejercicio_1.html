@@ -1,0 +1,43 @@
+<!-- Marcos Morales Doello -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Patrón de asteriscos</title>
+</head>
+
+<body>
+    <script>
+        // Le pedimos al usuario un número para saber cuántas filas tendrá nuestro triángulo
+        let n = parseInt(prompt('Introduce un número:'));
+
+        // Aquí guardaremos todo el patrón de asteriscos y espacios
+        let resultado = '';
+
+        // Bucle que recorre cada fila
+        for (let i = 0; i < n; i++) {
+
+            // Primero añadimos los espacios al principio de la fila
+            // Cuanto más baja la fila, más espacios ponemos
+            for (let j = 0; j < i; j++) {
+                resultado += ' ';
+            }
+
+            // Después añadimos los asteriscos
+            // En la primera fila hay muchos, y vamos reduciendo uno en cada fila
+            for (let k = n; k > i; k--) {
+                resultado += '*';
+            }
+
+            // Saltamos a la siguiente línea para seguir con la siguiente fila
+            resultado += '\n';
+        }
+
+        // Mostramos el triángulo en la página
+        // El <pre> sirve para que los espacios se mantengan tal cual
+        document.write('<pre>' + resultado + '</pre>');
+    </script>
+</body>
+
+</html>

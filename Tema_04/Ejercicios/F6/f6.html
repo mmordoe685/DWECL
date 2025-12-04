@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ejercicios sobre funciones — Demo</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:#f7f8fb;color:#111;padding:24px}
+    h1{font-size:1.6rem;margin-bottom:0.2rem}
+    .card{background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(24,39,75,0.06);padding:16px;margin:14px 0}
+    pre{background:#0b1220;color:#dff7ff;padding:12px;border-radius:8px;overflow:auto}
+    label{display:block;margin:8px 0 4px;font-weight:600}
+    input, textarea, select{width:100%;padding:8px;border-radius:8px;border:1px solid #e3e8ef}
+    button{margin-top:8px;padding:8px 12px;border-radius:8px;border:0;background:#2563eb;color:#fff;cursor:pointer}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace}
+  </style>
+</head>
+<body>
+  <h1>Ejercicios sobre funciones (vista web)</h1>
+  <p>Implementaciones en JavaScript de los ejercicios. Usa los controles para probar los ejemplos.</p>
+
+  <div class="card">
+    <h2>1. crearUsuario</h2>
+    <p>Recibe un objeto con <em>nombre</em>, <em>edad</em> y <em>pais</em>. Valores por defecto: "desconocido".</p>
+    <label>Objeto (JSON)</label>
+    <textarea id="u-input" rows="3">{"nombre":"Juan","edad":20,"pais":"España"}</textarea>
+    <button onclick="runCrearUsuario()">Ejecutar</button>
+    <p class="mono">Resultado:</p>
+    <pre id="u-output"></pre>
+  </div>
+
+  <div class="card">
+    <h2>2. operar (con funciones: suma, resta, multiplicación, sumamul)</h2>
+    <div class="row">
+      <div>
+        <label>n1</label>
+        <input id="op-n1" type="number" value="2" />
+      </div>
+      <div>
+        <label>n2</label>
+        <input id="op-n2" type="number" value="3" />
+      </div>
+    </div>
+    <label>Operación</label>
+    <select id="op-fn">
+      <option value="suma">suma</option>
+      <option value="resta">resta</option>
+      <option value="multiplicacion">multiplicación</option>
+      <option value="sumamul">sumamul (suma + multiplicación)</option>
+    </select>
+    <button onclick="runOperar()">Ejecutar</button>
+    <p class="mono">Resultado:</p>
+    <pre id="op-output"></pre>
+  </div>
+
+  <div class="card">
+    <h2>3. aplanar (recursiva)</h2>
+    <label>Array (JSON)</label>
+    <textarea id="flat-input" rows="2">[1, [2, [3, 4]], 5]</textarea>
+    <button onclick="runAplanar()">Aplanar</button>
+    <p class="mono">Resultado:</p>
+    <pre id="flat-output"></pre>
+  </div>
+
+  <div class="card">
+    <h2>4/5. listarArchivos (recursiva) a partir de objeto sistema de ficheros</h2>
+    <label>Objeto (JSON)</label>
+    <textarea id="fs-input" rows="6">{
+  "carpeta1": {
+    "archivo1": "contenido1",
+    "archivo2": "contenido2",
+    "subcarpeta": {
+      "archivo3": "contenido3"
+    }
+  },
+  "carpeta2": {
+    "archivo4": "contenido4"
+  }
+}</textarea>
+    <button onclick="runListarArchivos()">Listar archivos</button>
+    <p class="mono">Resultado:</p>
+    <pre id="fs-output"></pre>
+  </div>
+
+  <div class="card">
+    <h2>Permutar (todas las permutaciones)</h2>
+    <label>Array (JSON)</label>
+    <input id="perm-input" value='[1,2,3]' />
+    <button onclick="runPermutar()">Permutar</button>
+    <p class="mono">Resultado:</p>
+    <pre id="perm-output"></pre>
+  </div>
+
+  <script>
+    // 1. crearUsuario
+    function crearUsuario({ nombre = 'desconocido', edad = 'desconocido', pais = 'desconocido' } = {}) {
+      return `${nombre}, ${edad} años, ${pais}`;
+    }
+
+    function runCrearUsuario(){
+      const input = document.getElementById('u-input').value;
+      try{
+        const obj = JSON.parse(input);
+        document.getElementById('u-output').textContent = crearUsuario(obj);
+      }catch(e){
+        document.getElementById('u-output').textContent = 'JSON inválido: '+e.message;
+      }
+    }
+
+    // 2. operar
+    function suma(a,b){ return a+b }
+    function resta(a,b){ return a-b }
+    function multiplicacion(a,b){ return a*b }
+    // sumamul: suma y luego multiplicación, devuelve suma + multiplicación
+    function sumamul(a,b){ return suma(a,b) + multiplicacion(a,b) }
+
+    function operar(a,b,fn){
+      // fn es una función que recibe (a,b)
+      return fn(a,b);
+    }
+
+    function runOperar(){
+      const a = Number(document.getElementById('op-n1').value);
+      const b = Number(document.getElementById('op-n2').value);
+      const op = document.getElementById('op-fn').value;
+      const map = {suma, resta, multiplicacion, sumamul};
+      const fn = map[op];
+      const res = operar(a,b,fn);
+      document.getElementById('op-output').textContent = String(res);
+    }
+
+    // 3. aplanar (recursiva)
+    function aplanar(arr){
+      const res = [];
+      for(const item of arr){
+        if(Array.isArray(item)){
+          res.push(...aplanar(item));
+        } else {
+          res.push(item);
+        }
+      }
+      return res;
+    }
+
+    function runAplanar(){
+      try{
+        const arr = JSON.parse(document.getElementById('flat-input').value);
+        const out = aplanar(arr);
+        document.getElementById('flat-output').textContent = JSON.stringify(out);
+      }catch(e){
+        document.getElementById('flat-output').textContent = 'JSON inválido: '+e.message;
+      }
+    }
+
+    // 4/5. listarArchivos
+    function listarArchivos(obj){
+      const archivos = [];
+      function rec(current){
+        for(const key of Object.keys(current)){
+          const val = current[key];
+          if(val && typeof val === 'object' && !Array.isArray(val)){
+            // carpeta -> recursiva
+            rec(val);
+          } else {
+            // asumimos que es un archivo
+            archivos.push(key);
+          }
+        }
+      }
+      rec(obj);
+      return archivos;
+    }
+
+    function runListarArchivos(){
+      try{
+        const obj = JSON.parse(document.getElementById('fs-input').value);
+        const out = listarArchivos(obj);
+        document.getElementById('fs-output').textContent = JSON.stringify(out);
+      }catch(e){
+        document.getElementById('fs-output').textContent = 'JSON inválido: '+e.message;
+      }
+    }
+
+    // Permutaciones
+    function permutar(arr){
+      const res = [];
+      function backtrack(sofar, remaining){
+        if(remaining.length === 0){
+          res.push(sofar.slice());
+          return;
+        }
+        for(let i=0;i<remaining.length;i++){
+          const val = remaining[i];
+          sofar.push(val);
+          const next = remaining.slice(0,i).concat(remaining.slice(i+1));
+          backtrack(sofar,next);
+          sofar.pop();
+        }
+      }
+      backtrack([], arr);
+      return res;
+    }
+
+    function runPermutar(){
+      try{
+        const arr = JSON.parse(document.getElementById('perm-input').value);
+        if(!Array.isArray(arr)) throw new Error('Se esperaba un array');
+        const out = permutar(arr);
+        document.getElementById('perm-output').textContent = JSON.stringify(out);
+      }catch(e){
+        document.getElementById('perm-output').textContent = 'Error: '+e.message;
+      }
+    }
+
+    // Ejecutar demos iniciales
+    runCrearUsuario(); runOperar(); runAplanar(); runListarArchivos(); runPermutar();
+  </script>
+</body>
+</html>

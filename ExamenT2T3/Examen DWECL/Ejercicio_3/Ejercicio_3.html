@@ -1,0 +1,92 @@
+<!-- Marcos Morales Doello -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Procesar Valores</title>
+</head>
+
+<body>
+    <h2>Resultado</h2>
+    <div id="resultado"></div>
+
+    <script>
+        // Función para pedir los 6 valores al usuario
+        function pedirValores() {
+            let valores = [];
+            do {
+                valores = [];
+
+                // Pedimos dos booleanos
+                let bool1 = prompt("Introduce el primer valor booleano (true/false):");
+                let bool2 = prompt("Introduce el segundo valor booleano (true/false):");
+
+                // Convertimos a booleanos reales
+                bool1 = (bool1 === "true") ? true : (bool1 === "false") ? false : null;
+                bool2 = (bool2 === "true") ? true : (bool2 === "false") ? false : null;
+
+                // Pedimos dos números
+                let num1 = parseFloat(prompt("Introduce el primer número:"));
+                let num2 = parseFloat(prompt("Introduce el segundo número:"));
+                if (isNaN(num1)) num1 = null;
+                if (isNaN(num2)) num2 = null;
+
+                // Pedimos dos cadenas
+                let str1 = prompt("Introduce la primera cadena:");
+                let str2 = prompt("Introduce la segunda cadena:");
+
+                // Guardamos todos los valores
+                valores = [bool1, bool2, num1, num2, str1, str2];
+
+                // Si hay algún valor inválido, volvemos a pedir todos
+                if (valores.includes(null)) {
+                    alert("Algún valor no es válido. Vuelve a introducir todos los valores.");
+                }
+
+            } while (valores.includes(null));
+
+            return valores;
+        }
+
+        // Función para procesar los valores
+        function procesarValores(valores) {
+            const [bool1, bool2, num1, num2, str1, str2] = valores;
+            const resultadoDiv = document.getElementById("resultado");
+
+            // Determinar cuál cadena tiene más caracteres
+            const cadenaMayor = (str1.length >= str2.length) ? str1 : str2;
+
+            // Operaciones booleanas
+            const andResult = bool1 && bool2;
+            const orResult = bool1 || bool2;
+
+            // Operaciones numéricas
+            const suma = num1 + num2;
+            const resta = num1 - num2;
+
+            // Crear array ordenado:
+            // Primero booleanos (true > false), luego cadenas de mayor a menor longitud,
+            // finalmente números de mayor a menor
+            const valoresOrdenados = [
+                ...[bool1, bool2].sort((a, b) => b - a),
+                ...[str1, str2].sort((a, b) => b.length < a.length ? 1 : -1),
+                ...[num1, num2].sort((a, b) => b - a)
+            ];
+
+            // Mostrar resultados en la página
+            resultadoDiv.innerHTML = `
+                <p>La cadena mayor es: ${cadenaMayor}</p>
+                <p>La operación AND es: ${andResult} y la operación OR es: ${orResult}</p>
+                <p>La suma de los números es: ${suma} y la resta es: ${resta}</p>
+                <p>Valores ordenados: [${valoresOrdenados.join(", ")}]</p>
+            `;
+        }
+
+        // Programa principal
+        const valores = pedirValores(); // Pedimos valores
+        procesarValores(valores);       // Procesamos y mostramos resultados
+    </script>
+</body>
+
+</html>
