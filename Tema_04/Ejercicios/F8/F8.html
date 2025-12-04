@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejercicios JavaScript</title>
+<style>
+body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+h1 { text-align: center; }
+section { border: 2px solid #007bff; padding: 15px; margin: 20px 0; border-radius: 8px; }
+button { background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+button:hover { background: #0056b3; }
+pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<h1>Ejercicios JavaScript</h1>
+
+<!-- EJERCICIO 1 -->
+<section>
+<h2>Ejercicio 1 — Arrays y caracteres</h2>
+<p>Transforma palabras y cuenta vocales.</p>
+<button onclick="ejercicio1()">Ejecutar Ejercicio 1</button>
+<pre id="resultado1"></pre>
+</section>
+
+<!-- EJERCICIO 2 -->
+<section>
+<h2>Ejercicio 2 — Recursividad</h2>
+<p>Suma todos los enteros positivos hasta n.</p>
+<button onclick="ejercicio2()">Ejecutar Ejercicio 2</button>
+<pre id="resultado2"></pre>
+</section>
+
+<!-- EJERCICIO 3 -->
+<section>
+<h2>Ejercicio 3 — Funciones anónimas</h2>
+<p>Filtra y transforma un arreglo usando funciones anónimas.</p>
+<button onclick="ejercicio3()">Ejecutar Ejercicio 3</button>
+<pre id="resultado3"></pre>
+</section>
+
+<!-- EJERCICIO 4 -->
+<section>
+<h2>Ejercicio 4 — Callbacks y asincronía</h2>
+<p>Simula tareas asincrónicas y muestra orden de finalización.</p>
+<button onclick="ejercicio4()">Ejecutar Ejercicio 4</button>
+<pre id="resultado4"></pre>
+</section>
+
+<script>
+// ==================== EJERCICIO 1 ====================
+const capitalizarYContarVocales = (words) => {
+    const vocales = ['a','e','i','o','u'];
+    let totalVocales = 0;
+    const palabras = words.map(word => {
+        const capitalizada = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        for (let char of word.toLowerCase()) {
+            if (vocales.includes(char)) totalVocales++;
+        }
+        return capitalizada;
+    });
+    return { palabras, totalVocales };
+};
+
+function ejercicio1() {
+    const entrada = ["hola", "mUndo", "árbol", "PIrrAmiDe"];
+    const resultado = capitalizarYContarVocales(entrada);
+    document.getElementById('resultado1').textContent = JSON.stringify(resultado, null, 2);
+}
+
+// ==================== EJERCICIO 2 ====================
+const sumarHasta = (n) => {
+    if (n <= 0) return 0;
+    return n + sumarHasta(n - 1);
+};
+
+function ejercicio2() {
+    const n = 5;
+    const resultado = sumarHasta(n);
+    document.getElementById('resultado2').textContent = `Suma de 1 hasta ${n} = ${resultado}`;
+}
+
+// ==================== EJERCICIO 3 ====================
+const filtrarYTransformar = (arr, filtro, transformacion) => {
+    return arr.filter(filtro).map(transformacion);
+};
+
+function ejercicio3() {
+    const arr = [1,2,3,4,5,6];
+    const resultado = filtrarYTransformar(
+        arr,
+        n => n % 2 === 0, // filtrar pares
+        n => n * n        // elevar al cuadrado
+    );
+    document.getElementById('resultado3').textContent = JSON.stringify(resultado, null, 2);
+}
+
+// ==================== EJERCICIO 4 ====================
+const procesarTareas = (tareas, callbackFinal) => {
+    const resultado = [];
+    let completadas = 0;
+    tareas.forEach(tarea => {
+        setTimeout(() => {
+            document.getElementById('resultado4').textContent += `Tarea ${tarea.id} completada\n`;
+            resultado.push(tarea.id);
+            completadas++;
+            if (completadas === tareas.length) {
+                document.getElementById('resultado4').textContent += `Todas las tareas completadas en orden: [${resultado.join(', ')}]`;
+            }
+        }, tarea.duracion);
+    });
+};
+
+function ejercicio4() {
+    document.getElementById('resultado4').textContent = '';
+    const tareas = [
+        { id: 'A', duracion: 300 },
+        { id: 'B', duracion: 100 },
+        { id: 'C', duracion: 200 }
+    ];
+    procesarTareas(tareas);
+}
+</script>
+
+</body>
+</html>
