@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Juego de Capitales</title>
+</head>
+<body>
+
+<script>
+    /********************************************************
+     * 1. ENTRADA DE DATOS
+     * Creamos un array para guardar las 6 capitales
+     ********************************************************/
+    let capitales = [];
+
+    // Pedimos al usuario las 6 capitales por teclado
+    for (let i = 0; i < 6; i++) {
+        let capital = prompt("Introduce la capital número " + (i + 1));
+        capitales.push(capital);
+    }
+
+    /********************************************************
+     * 2. FUNCIÓN DE VALIDACIÓN Y REGULARIZACIÓN
+     * - Comprueba que cada capital tenga al menos 5 caracteres
+     * - Si no cumple, vuelve a pedirla
+     * - Convierte todas las capitales a minúsculas
+     ********************************************************/
+    function validarCapitales(lista) {
+        for (let i = 0; i < lista.length; i++) {
+
+            // Mientras la palabra tenga menos de 5 caracteres
+            while (lista[i].length < 5) {
+                alert("Error: la capital debe tener al menos 5 caracteres.");
+                lista[i] = prompt(
+                    "Introduce de nuevo la capital para la posición " + (i + 1)
+                );
+            }
+
+            // Pasamos la capital a minúsculas para evitar problemas al comparar
+            lista[i] = lista[i].toLowerCase();
+        }
+    }
+
+    // Llamamos a la función de validación
+    validarCapitales(capitales);
+
+    /********************************************************
+     * 3. LÓGICA DEL JUEGO
+     ********************************************************/
+
+    // Seleccionamos una capital aleatoria del array
+    let capitalSecreta = capitales[Math.floor(Math.random() * capitales.length)];
+
+    // Contador de intentos fallidos
+    let intentos = 0;
+
+    // Variable para saber si el usuario ha acertado
+    let acertado = false;
+
+    alert("¡Comienza el juego!");
+
+    /********************************************************
+     * Bucle principal del juego
+     * Se repite mientras:
+     * - No se hayan mostrado todas las letras
+     * - El usuario no haya acertado
+     ********************************************************/
+    while (intentos < capitalSecreta.length && !acertado) {
+
+        // Pedimos al usuario que intente adivinar la capital
+        let intentoUsuario = prompt("Introduce tu intento:").toLowerCase();
+
+        // Comprobamos si ha acertado
+        if (intentoUsuario === capitalSecreta) {
+            acertado = true;
+        } else {
+            // Si falla, aumentamos el número de intentos
+            intentos++;
+
+            /************************************************
+             * SISTEMA DE PISTAS
+             * Se muestran las letras descubiertas y
+             * el resto con guiones bajos
+             ************************************************/
+            let pista = "";
+
+            for (let i = 0; i < capitalSecreta.length; i++) {
+                if (i < intentos) {
+                    // Mostramos la letra correspondiente
+                    pista += capitalSecreta[i] + " ";
+                } else {
+                    // Mostramos guión bajo
+                    pista += "_ ";
+                }
+            }
+
+            alert("Pista: " + pista);
+        }
+    }
+
+    /********************************************************
+     * 4. FINALIZACIÓN DEL JUEGO
+     ********************************************************/
+    if (acertado) {
+        alert("¡Enhorabuena! Has adivinado la capital: " + capitalSecreta);
+    } else {
+        alert("Has perdido. La capital era: " + capitalSecreta);
+    }
+</script>
+
+</body>
+</html>
