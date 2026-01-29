@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejercicio 2: Catálogo de Productos</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+    button { padding: 8px 12px; margin: 10px 0; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #eee; }
+  </style>
+</head>
+<body>
+  <h2>Ejercicio 2: Catálogo de Productos</h2>
+  <button id="btnProductos">Cargar productos</button>
+  <button id="btnStockBajo">Filtrar por stock bajo</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Marca</th>
+      </tr>
+    </thead>
+    <tbody id="productosTabla"></tbody>
+  </table>
+
+  <script>
+    const btnProductos = document.getElementById("btnProductos");
+    const btnStockBajo = document.getElementById("btnStockBajo");
+    const productosTabla = document.getElementById("productosTabla");
+
+    let productos = [];
+
+    async function cargarProductos() {
+      const response = await fetch("https://dummyjson.com/products");
+      const data = await response.json();
+      productos = data.products;
+      pintarProductos(productos);
+    }
+
+    function pintarProductos(lista) {
+      productosTabla.innerHTML = "";
+      lista.forEach(producto => {
+        productosTabla.innerHTML += `
+          <tr>
+            <td>${producto.title}</td>
+            <td>$${producto.price}</td>
+            <td>${producto.stock}</td>
+            <td>${producto.brand}</td>
+          </tr>
+        `;
+      });
+    }
+
+    btnProductos.addEventListener("click", cargarProductos);
+
+    btnStockBajo.addEventListener("click", () => {
+      const filtrados = productos.filter(p => p.stock < 10);
+      pintarProductos(filtrados);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejercicio 3: Buscador de Productos</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+    input, button { padding: 8px; margin: 10px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #eee; }
+    img { width: 60px; }
+    .mensaje { margin-top: 10px; font-weight: bold; color: red; }
+  </style>
+</head>
+<body>
+  <h2>Ejercicio 3: Buscador de Productos</h2>
+  <input type="text" id="busqueda" placeholder="Buscar producto...">
+  <button id="btnBuscar">Buscar</button>
+
+  <div id="mensajeBusqueda" class="mensaje"></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Descuento (%)</th>
+      </tr>
+    </thead>
+    <tbody id="busquedaTabla"></tbody>
+  </table>
+
+  <script>
+    const btnBuscar = document.getElementById("btnBuscar");
+    const busquedaInput = document.getElementById("busqueda");
+    const busquedaTabla = document.getElementById("busquedaTabla");
+    const mensajeBusqueda = document.getElementById("mensajeBusqueda");
+
+    btnBuscar.addEventListener("click", async () => {
+      const valor = busquedaInput.value.trim();
+      busquedaTabla.innerHTML = "";
+      mensajeBusqueda.textContent = "";
+
+      if (valor === "") return;
+
+      const response = await fetch(`https://dummyjson.com/products/search?q=${valor}`);
+      const data = await response.json();
+
+      if (data.products.length === 0) {
+        mensajeBusqueda.textContent = "No se encontraron productos que coincidan con tu búsqueda";
+        return;
+      }
+
+      data.products.forEach(producto => {
+        busquedaTabla.innerHTML += `
+          <tr>
+            <td><img src="${producto.thumbnail}" alt="${producto.title}"></td>
+            <td>${producto.title}</td>
+            <td>${producto.description}</td>
+            <td>${producto.discountPercentage}%</td>
+          </tr>
+        `;
+      });
+    });
+  </script>
+</body>
+</html>

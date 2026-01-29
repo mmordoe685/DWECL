@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejercicio 1: El Equipo Pokémon</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+    button { padding: 8px 12px; margin: 10px 0; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #eee; }
+    img { width: 60px; }
+  </style>
+</head>
+<body>
+  <h2>Ejercicio 1: El Equipo Pokémon</h2>
+  <button id="btnPokemon">Cargar equipo Pokémon</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Experiencia Base</th>
+      </tr>
+    </thead>
+    <tbody id="pokemonTabla"></tbody>
+  </table>
+
+  <script>
+    const btnPokemon = document.getElementById("btnPokemon");
+    const pokemonTabla = document.getElementById("pokemonTabla");
+
+    btnPokemon.addEventListener("click", async () => {
+      pokemonTabla.innerHTML = "";
+      const ids = [1, 4, 7]; // Bulbasaur, Charmander, Squirtle
+
+      for (const id of ids) {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        const data = await response.json();
+
+        pokemonTabla.innerHTML += `
+          <tr>
+            <td><img src="${data.sprites.front_default}" alt="${data.name}"></td>
+            <td>${data.name}</td>
+            <td>${data.base_experience}</td>
+          </tr>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
