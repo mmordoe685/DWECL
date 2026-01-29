@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Gestor JSON Extendido</title>
+<style>
+body { font-family: 'Segoe UI', sans-serif; padding: 30px; background-color: #f4f7f6; }
+.container { background: white; padding: 20px; border-radius: 10px; max-width: 700px; margin: auto; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+h2 { text-align:center; }
+.form-group { margin-bottom: 10px; }
+label { font-weight: bold; }
+input { width:100%; padding:8px; margin-top:4px; }
+.botones { display:flex; gap:10px; flex-wrap:wrap; margin-top:15px; }
+button { padding:10px; border:none; border-radius:5px; color:white; font-weight:bold; cursor:pointer; }
+.btn-add { background:#007bff; }
+.btn-clear { background:#6c757d; }
+.btn-download { background:#28a745; }
+.btn-upload { background:#ffc107; color:black; }
+table { width:100%; margin-top:20px; border-collapse:collapse; }
+th, td { border:1px solid #ddd; padding:8px; text-align:center; }
+.suspenso { color:red; font-weight:bold; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Gestión de Alumnos (JSON + localStorage)</h2>
+
+<div class="form-group"><label>Nombre</label><input id="nombre"></div>
+<div class="form-group"><label>Apellidos</label><input id="apellidos"></div>
+<div class="form-group"><label>Edad</label><input type="number" id="edad"></div>
+<div class="form-group"><label>Nota</label><input type="number" id="nota" min="0" max="10"></div>
+<div class="form-group"><label>Móvil</label><input id="movil" placeholder="6XXXXXXXX"></div>
+
+<div class="botones">
+<button class="btn-add" onclick="guardar()">Guardar</button>
+<button class="btn-clear" onclick="limpiar()">Limpiar</button>
+<button class="btn-download" onclick="descargarJSON()">Descargar JSON</button>
+<button class="btn-upload" onclick="document.getElementById('file').click()">Subir JSON</button>
+</div>
+<input type="file" id="file" accept="application/json" hidden onchange="subirJSON(event)">
+
+<table>
+<thead><tr><th>Nombre</th><th>Edad</th><th>Nota</th><th>Resultado</th></tr></thead>
+<tbody id="tabla"></tbody>
+</table>
+</div>
+
+<script>
+let alumnos = JSON.parse(localStorage.getItem('alumnos')) || [];
+mostrar();
+
+function guardar(){
+ const movil = document.getElementById('movil').value;
+ if(!/^6\d{8}$/.test(movil)){
+   alert('El móvil debe tener 9 dígitos y empezar por 6');
+   return;
+ }
+ const alumno = {
+  nombre: nombre.value,
+  apellidos: apellidos.value,
+  edad: edad.value,
+  nota: Number(nota.value),
+  movil: movil
+ };
+ alumnos.push(alumno);
+ localStorage.setItem('alumnos', JSON.stringify(alumnos));
+ mostrar(); limpiar();
+}
+
+function mostrar(){
+ const t = document.getElementById('tabla');
+ t.innerHTML='';
+ alumnos.forEach(a=>{
+  t.innerHTML += `<tr><td>${a.nombre} ${a.apellidos}</td><td>${a.edad}</td><td class="${a.nota<5?'suspenso':''}">${a.nota}</td><td>${a.nota>=5?'Aprobado':'Suspenso'}</td></tr>`;
+ });
+}
+
+function limpiar(){ document.querySelectorAll('input').forEach(i=>i.value=''); }
+
+function descargarJSON(){
+ const blob = new Blob([JSON.stringify(alumnos,null,2)], {type:'application/json'});
+ const a = document.createElement('a');
+ a.href = URL.createObjectURL(blob);
+ a.download = 'alumnos.json';
+ a.click();
+}
+
+function subirJSON(e){
+ const file = e.target.files[0];
+ const reader = new FileReader();
+ reader.onload = ev => {
+   alumnos = JSON.parse(ev.target.result);
+   localStorage.setItem('alumnos', JSON.stringify(alumnos));
+   mostrar();
+ };
+ reader.readAsText(file);
+}
+</script>
+</body>
+</html>
